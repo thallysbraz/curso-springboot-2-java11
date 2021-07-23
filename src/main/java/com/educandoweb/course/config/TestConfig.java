@@ -10,10 +10,12 @@ import org.springframework.context.annotation.Profile;
 
 import com.educandoweb.course.entitites.Category;
 import com.educandoweb.course.entitites.Order;
+import com.educandoweb.course.entitites.Product;
 import com.educandoweb.course.entitites.User;
 import com.educandoweb.course.entitites.enums.OrderStatus;
 import com.educandoweb.course.repositories.CategoryRepository;
 import com.educandoweb.course.repositories.OrderRepository;
+import com.educandoweb.course.repositories.ProductRepository;
 import com.educandoweb.course.repositories.UserRepository;
 
 @Configuration
@@ -29,6 +31,9 @@ public class TestConfig implements CommandLineRunner {
 	@Autowired
 	private CategoryRepository categoryRepository;
 	
+	@Autowired
+	private ProductRepository productRepository;
+	
 	@Override
 	public void run(String... args) throws Exception {
 		// Categorias
@@ -36,7 +41,12 @@ public class TestConfig implements CommandLineRunner {
 		Category cat2 = new Category(null, "Books"); 
 		Category cat3 = new Category(null, "Computers"); 
 		
-		categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
+		// Produtos
+		Product p1 = new Product(null, "The Lord of the Rings", "Lorem ipsum dolor sit amet, consectetur.", 90.5, ""); 
+		Product p2 = new Product(null, "Smart TV", "Nulla eu imperdiet purus. Maecenas ante.", 2190.0, ""); 
+		Product p3 = new Product(null, "Macbook Pro", "Nam eleifend maximus tortor, at mollis.", 1250.0, ""); 
+		Product p4 = new Product(null, "PC Gamer", "Donec aliquet odio ac rhoncus cursus.", 1200.0, ""); 
+		Product p5 = new Product(null, "Rails for Dummies", "Cras fringilla convallis sem vel faucibus.", 100.99, "");
 		
 		// Users
 		User u1 = new User(null, "Thallys", "thallys@gmail.com", "996344135", "123456"); 
@@ -49,6 +59,8 @@ public class TestConfig implements CommandLineRunner {
 		Order o4 = new Order(null, Instant.parse("2021-07-22T15:21:22Z"), OrderStatus.DELIVERED, u2);
 		
 		//salvando no banco de dados
+		categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
+		productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
 		userRepository.saveAll(Arrays.asList(u1, u2));
 		orderRepository.saveAll(Arrays.asList(o1, o2, o3, o4));
 	}
